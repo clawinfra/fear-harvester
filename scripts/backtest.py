@@ -5,6 +5,7 @@ Tests the strategy: DCA when F&G < threshold, hold N days, sell at recovery.
 """
 
 import json
+from pathlib import Path
 import requests
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -136,7 +137,7 @@ if __name__ == "__main__":
     result = run_backtest(fg_threshold=threshold, hold_days=hold)
 
     print(f"\n{'='*50}")
-    print(f"FEARH HARVESTER BACKTEST RESULTS")
+    print(f"FEAR HARVESTER BACKTEST RESULTS")
     print(f"{'='*50}")
     print(f"Strategy: {result['strategy']}")
     print(f"Total Trades: {result['total_trades']}")
@@ -149,6 +150,8 @@ if __name__ == "__main__":
     print(f"\nSharpe {'✅ > 1.5 — DEPLOY' if result['sharpe_ratio'] > 1.5 else '⚠️ < 1.5 — NEEDS WORK'}")
 
     # Save results
-    with open("/home/bowen/clawd/skills/fear-harvester/data/backtest_results.json", "w") as f:
+    results_path = Path(__file__).parent.parent / "data" / "backtest_results.json"
+    results_path.parent.mkdir(exist_ok=True)
+    with open(results_path, "w") as f:
         json.dump(result, f, indent=2, default=str)
     print(f"\nResults saved to data/backtest_results.json")
