@@ -10,8 +10,14 @@ Autonomous DCA agent for extreme fear markets.
 
 ## Usage
 ```bash
-uv run python scripts/backtest.py --start 2018-01-01 --capital 10000
-uv run python scripts/signals.py --live
+# Backtest: optional positional args are [fg_threshold] [hold_days] (defaults: 10 90)
+uv run python scripts/backtest.py 10 90
+
+# Live signal check (no flags; prints current F&G + buy/hold signal)
+uv run python scripts/signals.py
+
+# Executor: --dry-run | --paper | --live | --status (plus --buy-threshold,
+# --sell-threshold, --dca-amount, --max-capital). See executor.py --help.
 uv run python scripts/executor.py --dry-run
 ```
 
